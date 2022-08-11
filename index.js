@@ -1,10 +1,17 @@
+// Modulos
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import mongoose from "mongoose";
 import "dotenv/config";
 
+// Rotas
+import postRoutes from "./routes/postsRoute.js";
+
 const app = express();
+
+// Middlewares
+app.use("/posts", postRoutes);
 
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
