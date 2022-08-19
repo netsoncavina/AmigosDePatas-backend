@@ -12,7 +12,11 @@ export const getPosts = async (req, res) => {
 
 export const createPost = async (req, res) => {
   const post = req.body;
-  const newPost = new PostMessage(post);
+  const newPost = new PostMessage({
+    ...post,
+    owner: req.userId,
+    createdAt: new Date().toISOString(),
+  });
   try {
     await newPost.save();
     res.status(201).json(newPost);
@@ -36,14 +40,14 @@ export const updatePost = async (req, res) => {
 };
 
 export const likePost = async (req, res) => {
-  const { id: _id } = req.params;
+  const { id } = req.params;
 
   if (!req.userId) return res.status(401).json({ message: "Não autorizado" });
 
-  if (!mongoose.Types.ObjectId.isValid(_id))
+  if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(400).json({ message: "Id inválido" });
 
-  const post = await PostMessage.findById(_id);
+  const post = await PostMessage.findById(id);
 
   const index = post.likes.indexOf((id) => id === String(req.userId));
 
@@ -53,7 +57,7 @@ export const likePost = async (req, res) => {
     post.likes = post.likes.filter((id) => id !== String(req.userId));
   }
 
-  const updatedPost = await PostMessage.findByIdAndUpdate(_id, post, {
+  const updatedPost = await PostMessage.findByIdAndUpdate(id, post, {
     new: true,
   });
 

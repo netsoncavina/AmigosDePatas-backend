@@ -14,7 +14,7 @@ export const signin = async (req, res) => {
     if (!isPasswordValid) return res.status(400).send("Senha inválida");
 
     const token = jwt.sign(
-      { eail: existingUser.email, id: existingUser._id },
+      { email: existingUser.email, id: existingUser._id },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
