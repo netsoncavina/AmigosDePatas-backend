@@ -6,6 +6,7 @@ const postSchema = new mongoose.Schema({
   age: Number,
   creator: String,
   owner: String,
+  phoneNumber: String,
   localization: String,
   description: String,
   tags: [String],
