@@ -24,9 +24,10 @@ app.get("/", (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-
+const DB_CONNECTION =
+  "mongodb+srv://netson:aqeVQqwX0byyitsB@cluster0.e3ugm.mongodb.net/projetointegrador?retryWrites=true&w=majority";
 mongoose
-  .connect(process.env.DB_CONNECTION, {
+  .connect(DB_CONNECTION, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

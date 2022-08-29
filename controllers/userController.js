@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import "dotenv/config";
 export const signin = async (req, res) => {
   const { email, password } = req.body;
+  const JWT_SECRET = "42isTheAnswer42";
   try {
     const existingUser = await User.findOne({ email });
     if (!existingUser) return res.status(404).send("Usuário não encontrado");
@@ -15,7 +16,7 @@ export const signin = async (req, res) => {
 
     const token = jwt.sign(
       { email: existingUser.email, id: existingUser._id },
-      process.env.JWT_SECRET,
+      JWT_SECRET,
       { expiresIn: "1h" }
     );
 
@@ -47,7 +48,7 @@ export const signup = async (req, res) => {
 
     const token = jwt.sign(
       { email: result.email, id: result._id },
-      process.env.JWT_SECRET,
+      JWT_SECRET,
       { expiresIn: "1h" }
     );
 
