@@ -2,6 +2,7 @@ import express from "express";
 import {
   getPosts,
   getPostBySearch,
+  getPostCount,
   createPost,
   updatePost,
   likePost,
@@ -13,6 +14,7 @@ const router = express.Router();
 
 router.get("/", getPosts);
 router.get("/search", getPostBySearch);
+router.get("/count", getPostCount);
 router.post("/", auth, createPost);
 router.patch("/:id", auth, updatePost);
 router.patch("/:id/likePost", auth, likePost);

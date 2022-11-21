@@ -41,6 +41,15 @@ export const getPostBySearch = async (req, res) => {
   }
 };
 
+export const getPostCount = async (req, res) => {
+  try {
+    const postCount = await PostMessage.countDocuments({});
+    res.json({ data: postCount });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
 export const createPost = async (req, res) => {
   const post = req.body;
   const newPost = new PostMessage({
