@@ -25,7 +25,7 @@ app.get("/", (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 const DB_CONNECTION =
-  "mongodb+srv://netson:aqeVQqwX0byyitsB@cluster0.e3ugm.mongodb.net/projetointegrador?retryWrites=true&w=majority";
+  "mongodb+srv://netson:cwxy4Keg4ODkTTRe@cluster0.e3ugm.mongodb.net/projetointegrador?retryWrites=true&w=majority";
 mongoose
   .connect(DB_CONNECTION, {
     useNewUrlParser: true,
@@ -34,6 +34,4 @@ mongoose
   .then(() =>
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
   )
-  .catch((error) => console.log(error.message));
-
-// mongoose.set("useFindAndModify", false);
+  .catch((error) => console.log(error.message, process.env.JWT_SECRET));
