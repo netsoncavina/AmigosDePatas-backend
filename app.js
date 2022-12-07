@@ -12,7 +12,6 @@ import userRoutes from "./routes/userRoute.js";
 const app = express();
 
 // Middlewares
-
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
