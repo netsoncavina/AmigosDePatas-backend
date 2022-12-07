@@ -60,3 +60,77 @@ describe("Posts", () => {
     });
   });
 });
+
+describe("Usuários", () => {
+  describe("POST tests", () => {
+    it("POST /users --> cadastra um usuário", async () => {
+      const response = await supertest(app).post("/users").send({
+        name: "Teste",
+        email: "email@email.com",
+        password: "123456",
+      });
+
+      expect(response.status).toBe(201);
+      expect(response.body).toHaveProperty("id");
+    });
+  });
+
+  describe("GET tests", () => {
+    it("GET /users --> Array de usuários", async () => {
+      const response = await supertest(app).get("/users");
+
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveLength(1);
+    });
+
+    it("GET /users/:email --> Usuário especifico por email", async () => {
+      const response = await supertest(app).get("/users/email@email");
+
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty("email");
+    });
+
+    it("GET /users/:email --> Array vazio se não encontrado", async () => {
+      const response = await supertest(app).get("/users/email@naoexiste");
+
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveLength(0);
+    });
+
+    it("GET /users/:name --> Usuário especifico por nome", async () => {
+      const response = await supertest(app).get("/users/Teste");
+
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty("name");
+    });
+
+    it("GET /users/:name --> Array vazio se não encontrado", async () => {
+      const response = await supertest(app).get("/users/naoexiste");
+
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveLength(0);
+    });
+  });
+
+  describe("UPDATE tests", () => {
+    it("UPDATE /users/:id --> atualiza os dados de um usuário", async () => {
+      const response = await supertest(app).put("/users/1").send({
+        name: "Teste",
+        email: "teste@teste.com",
+        password: "123456",
+      });
+
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty("id");
+    });
+  });
+
+  describe("DELETE tests", () => {
+    it("DELETE /users/:id --> Excluir um usuário", async () => {
+      const response = await supertest(app).delete("/users/1");
+
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveLength(0);
+    });
+  });
+});
