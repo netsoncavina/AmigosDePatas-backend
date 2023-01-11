@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
 import bcrypt from "bcrypt";
+import mongoose from "mongoose";
+
 import "dotenv/config";
 export const signin = async (req, res) => {
   const { email, password } = req.body;
@@ -68,4 +70,13 @@ export const getUsers = async (req, res) => {
   }
 };
 
-// const deleteUser = async (req, res) => {
+export const updateUser = async (req, res) => {
+  const { id: _id } = req.params;
+  const updatedUser = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(_id))
+    return res.status(400).json({ message: "Id inválido" });
+
+  await User.findByIdAndUpdate(_id, updatedUser, { new: true });
+  res.json(updatedUser);
+};
