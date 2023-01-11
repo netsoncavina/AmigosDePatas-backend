@@ -80,3 +80,13 @@ export const updateUser = async (req, res) => {
   await User.findByIdAndUpdate(_id, updatedUser, { new: true });
   res.json(updatedUser);
 };
+
+export const deleteUser = async (req, res) => {
+  const { id: _id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(_id))
+    return res.status(400).json({ message: "Id inválido" });
+
+  await User.findByIdAndRemove(_id);
+  res.json({ message: "Usuário deletado com sucesso" });
+};
