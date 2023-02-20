@@ -70,6 +70,17 @@ export const getUsers = async (req, res) => {
   }
 };
 
+export const getUser = async (req, res) => {
+  const { id: _id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(_id))
+    return res.status(400).json({ message: "Id inválido" });
+
+  await User.findById(_id).then((user) => {
+    res.status(200).json(user);
+  });
+};
+
 export const updateUser = async (req, res) => {
   const { id: _id } = req.params;
   const updatedUser = req.body;
