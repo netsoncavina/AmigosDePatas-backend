@@ -3,6 +3,7 @@ import {
   signin,
   signup,
   getUsers,
+  getUser,
   updateUser,
   deleteUser,
 } from "../controllers/userController.js";
@@ -10,6 +11,7 @@ import {
 const router = express.Router();
 
 router.get("/", getUsers);
+router.get("/:id", getUser);
 router.patch("/:id", updateUser);
 router.post("/signin", signin);
 router.post("/signup", signup);
